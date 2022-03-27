@@ -5,6 +5,7 @@ const {
     BrowserWindow,
     Notification
 } = require('electron')
+const path = require('path')
 
 // 保持一個對於 window 物件的全域的引用，不然，當 JavaScript 被GC，
 // window 會被自動地關閉
@@ -16,13 +17,22 @@ var mainWindow = null;
 function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800,
-        height: 600
+        height: 600,
+        webPreferences: {
+            // 載入 preload.js
+            preload: [
+                path.join(__dirname, 'js/vue.global.js'),
+                path.join(__dirname, 'js/render.js')
+            ],
+            nodeIntegration: true, 
+            contextIsolation: false
+        }
     })
     // 載入應用程式的 index.html
     mainWindow.loadFile('index.html')
 
     // 打開開發者工具
-    //mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
     // 當window 被關閉，這個事件會被觸發
     mainWindow.on('closed', function () {
@@ -31,11 +41,11 @@ function createWindow() {
         // 但這次不是。
         mainWindow = null;
     });
-    app.on('activate', () => {    
+    app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0) {
             createWindow()
         }
-        
+
     })
 }
 
@@ -47,11 +57,11 @@ function showNotification() {
         title: NOTIFICATION_TITLE,
         body: NOTIFICATION_BODY
     }).show()
-/*
-    myNotification.onclick = () => {
-        console.log('Notification clicked')
-    }
-    */
+    /*
+        myNotification.onclick = () => {
+            console.log('Notification clicked')
+        }
+        */
 }
 
 app.whenReady().then(createWindow).then(showNotification)
@@ -64,4 +74,3 @@ app.on('window-all-closed', function () {
         app.quit();
     }
 });
-
