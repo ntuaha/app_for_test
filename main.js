@@ -31,6 +31,12 @@ function createWindow() {
         // 但這次不是。
         mainWindow = null;
     });
+    app.on('activate', () => {    
+        if (BrowserWindow.getAllWindows().length === 0) {
+            createWindow()
+        }
+        
+    })
 }
 
 const NOTIFICATION_TITLE = 'Basic Notification'
@@ -59,10 +65,3 @@ app.on('window-all-closed', function () {
     }
 });
 
-app.on('activate', () => {
-    /*
-        if (BrowserWindow.getAllWindows().length === 0) {
-            createWindow()
-        }
-        */
-})
