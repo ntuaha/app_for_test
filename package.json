@@ -1,5 +1,12 @@
 {
     "name": "aha",
     "version": "0.1.0",
-    "main": "main.js"
+    "main": "main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "@electron-forge/cli": "^6.0.0-beta.63",
+        "electron": "^17.2.0"
+    }
 }
