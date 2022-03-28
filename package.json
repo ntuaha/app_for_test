@@ -3,10 +3,19 @@
     "version": "0.2.1",
     "main": "main.js",
     "scripts": {
-        "start": "electron ."
+        "start": "electron .",
+        "pack": "electron-builder --dir",
+        "dist": "electron-builder"
     },
     "devDependencies": {
         "@electron-forge/cli": "^6.0.0-beta.63",
-        "electron": "^17.2.0"
+        "electron": "^17.2.0",
+        "electron-builder": "^22.14.13"
+    },
+    "build": {
+        "appId": "aha",
+        "mac": {
+            "category": "fun"
+        }
     }
 }
